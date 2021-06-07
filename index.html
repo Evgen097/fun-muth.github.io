@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+
+<style>
+
+    html, body{
+        font-family: 'Roboto', sans-serif;
+        /*color: #333;*/
+        /*background: deepskyblue;*/
+    }
+
+    #container {
+
+        position: relative;
+        width: 100%;
+        /*height: 1000px;*/
+        display: block;
+        /*height: 100%;*/
+        height: 100vh;
+        background-color: #9ecc6a;
+
+    }
+
+    #game{
+        position: relative;
+        width: 100%;
+        height: 100%;
+        background-image: url("dist/fon-4.JPG");
+        background-color: #88cc9a;
+        background-repeat: no-repeat, repeat;
+        background-size: cover;
+        /*background-size: 100%;*/
+    }
+
+    #tank{
+        position: absolute;
+        background-image: url("dist/leviofan-2.png");
+        /*background-color: #cc6b6d;*/
+        background-repeat: no-repeat;
+        background-size: contain;
+
+        bottom: 80px;
+        right: 10px;
+
+        width: 350px;
+        height: 200px;
+        animation: bounce  20s infinite ease-in-out;
+    }
+
+    #boom_player, #boom_tank{
+        display: none;
+        position: relative;
+        background-image: url("dist/boom-1.png");
+        /*background-color: #cc6b6d;*/
+        background-repeat: no-repeat;
+        background-size: contain;
+
+        margin-top: 10%;
+        margin-left: 30%;
+        width: 50%;
+        height: 60%;
+    }
+
+    #player{
+        position: absolute;
+        background-image: url("dist/tank-lgt-1.png");
+        /*background-color: #cc6b6d;*/
+        background-repeat: no-repeat, repeat;
+        background-size: contain;
+        bottom: 50px;
+        left: 0px;
+        width: 350px;
+        height: 200px;
+    }
+
+    #say_player{
+        display: none;
+        position: relative;
+        background-image: url("dist/say-left.png");
+        /*background-color: #cc6b6d;*/
+        background-repeat: no-repeat, repeat;
+        background-size: contain;
+        margin-top: -40%;
+        margin-left: 40%;
+        width: 60%;
+        height: 65%;
+    }
+
+
+    #say_tank{
+        display: none;
+        position: absolute;
+        background-image: url("dist/say-right.png");
+        /*background-color: #cc6b6d;*/
+        background-repeat: no-repeat, repeat;
+        background-size: contain;
+        margin-top: -30%;
+        margin-left: 10%;
+        width: 60%;
+        height: 65%;
+    }
+
+    #player_text{
+        /*background-color: #cc6b6d;*/
+        position: absolute;
+        font-size: 20px;
+        margin: 10% 10% 10% 15% ;
+    }
+
+    #tank_text{
+        /*background-color: #cc6b6d;*/
+        position: absolute;
+        font-size: 20px;
+        margin: 10% 10% 10% 15% ;
+    }
+
+    #player_score{
+        position: absolute;
+        font-size: 40px;
+        top: 5%;
+        left: 5%;
+        color: #ff6385;
+        background-color: #ffffff;
+        border: #69b5ff 8px solid;
+        border-radius: 10px;
+        padding: 10px;
+
+    }
+
+    #tank_score{
+        position: absolute;
+        font-size: 40px;
+        top: 5%;
+        right: 5%;
+        padding: 10px;
+        color: #ff6385;
+        background-color: #ffffff;
+        border: #69b5ff 8px solid;
+        border-radius: 10px;
+    }
+
+    #example{
+        position: absolute;
+        width: 310px;
+        font-size: 50px;
+        top: 10%;
+        left: 40%;
+        padding: 10px;
+        color: #000aff;
+        background-color: #ffffff;
+        border: #69b5ff 8px solid;
+        border-radius: 10px;
+        /*overflow: hidden;*/
+    }
+    #answer
+    {
+        position: absolute;
+        bottom: -95px;
+        right: 10px;
+        /*height:60px;*/
+        /*size: 2;*/
+        color: darkblue;
+        margin-bottom: 100px;
+        font-size: 50px;
+        /*border-color: #ff8900;*/
+        border: #ffa342 8px solid;
+        border-radius: 10px;
+        width:70px;
+        height: 50px;
+    }
+
+    @keyframes bounce {
+        0% {
+            transform: rotate(0deg);
+        }
+        50% {
+            transform: rotate(10deg);
+        }
+
+        100% {
+            transform: rotate(0deg);
+        }
+    }
+
+
+    #muzzle_player{
+        display: none;
+        position: absolute;
+        background-image: url("dist/smoke-left.png");
+        /*background-color: #cc6b6d;*/
+        background-repeat: no-repeat, repeat;
+        background-size: contain;
+        margin-top: 0%;
+        margin-left: 90%;
+        width: 60%;
+        height: 65%;
+    }
+
+    #muzzle_tank{
+        display: none;
+        position: absolute;
+        background-image: url("dist/smoke-right.png");
+        /*background-color: #cc6b6d;*/
+        background-repeat: no-repeat, repeat;
+        background-size: contain;
+        margin-top: 3%;
+        margin-left: -55%;
+        width: 60%;
+        height: 65%;
+    }
+
+
+    #win, #lost{
+        display: none;
+        position: absolute;
+        /*background-color: #cc6b6d;*/
+        background-repeat: no-repeat;
+        background-size: contain;
+
+        bottom: 80px;
+        right: 30%;
+
+        width: 350px;
+        height: 200px;
+        animation: zoming  2s infinite ease-in-out;
+    }
+
+    #win, #lost {
+        background-image: url("dist/win game.jpg");
+    }
+
+    #lost {
+        background-image: url("dist/lost game.JPG");
+    }
+
+    @keyframes zoming {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.2);
+        }
+
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    #rostick {
+        display: none;
+        position: absolute;
+        background-image: url("dist/rostic1.jpg");
+        /*background-color: #cc6b6d;*/
+        background-repeat: no-repeat;
+        background-size: contain;
+
+        bottom: 80px;
+        right: 10px;
+
+        width: 200px;
+        height: 200px;
+        animation: bounce  20s infinite ease-in-out;
+    }
+
+</style>
+
+<body>
+
+<div id="container">
+    <div id="game">
+        <div id="player">
+            <div id="say_player">
+                <p id="player_text">Левиофан ты не пройдеш</p>
+            </div>
+            <div id="boom_player"></div>
+            <div id="muzzle_player"></div>
+            <div id="rostick"></div>
+        </div>
+        <div id="tank">
+            <div id="say_tank">
+                <p id="tank_text">Я уничтожу тебя!</p>
+            </div>
+            <div id="boom_tank"></div>
+            <div id="muzzle_tank"></div>
+        </div>
+        <div id="player_score">100</div>
+        <div id="tank_score">100</div>
+
+        <div id="example">
+            <span id="task"></span>
+            <span > = </span>
+            <input id="answer"  type="text" maxlength="3">
+        </div>
+
+        <div id="win"></div>
+        <div id="lost"></div>
+
+        <audio id="noise_tank" src="dist/noise_tank.mp3" muted></audio>
+
+
+    </div>
+</div>
+
+</body>
+
+<script>
+
+  // audio.src = "dist/noise_tank.mp3"
+
+
+  console.log("game start 5");
+
+    let initial_score = 100;
+    let score_step = 5;
+
+    let html_elements = {
+      player_score: document.getElementById("player_score"),
+      tank_score: document.getElementById("tank_score"),
+      task: document.getElementById("task"),
+      answer: document.getElementById("answer"),
+      boom_tank: document.getElementById("boom_tank"),
+      boom_player: document.getElementById("boom_player"),
+      muzzle_player: document.getElementById("muzzle_player"),
+      muzzle_tank: document.getElementById("muzzle_tank"),
+      win: document.getElementById("win"),
+      lost: document.getElementById("lost"),
+      rostick: document.getElementById("rostick"),
+      say_tank: document.getElementById("say_tank"),
+      say_player: document.getElementById("say_player"),
+      noise_tank: document.getElementById("noise_tank")
+
+    }
+
+
+    let create_task = () =>{
+        let max_value = 80;
+        let data = {
+          firs_value: Math.floor(Math.random() * max_value),
+          second_value: Math.floor(Math.random() * (max_value - 50)),
+          sign: "+",
+          task: function () {
+            return this.firs_value + ' ' + this.sign + ' ' + this.second_value;
+          }
+        };
+        return data;
+    };
+
+    let task_data = create_task();
+
+
+    let add_value_to_html = (value, html_id) =>{
+      let elem = html_elements[html_id];
+      elem.innerHTML = value;
+    }
+
+  let reset_example = ()=> {
+    task_data = create_task();
+    let data = task_data['task']();
+    add_value_to_html(data, "task");
+    html_elements["answer"].value = '';
+  }
+
+
+  let show_elem_time = (id, time = 2) => {
+    html_elements[id].style.display = "block";
+    function hide() {
+      html_elements[id].style.display = "none";
+    }
+    setTimeout(hide, time * 1000);
+  }
+
+
+  let change_life_score = (id, amount)=>{
+    let score = parseInt(html_elements[id].innerHTML);
+    html_elements[id].innerHTML = score - amount
+  }
+
+
+    let handle_answer = (is_correct) =>{
+      if(is_correct){
+        // #boom_player, #boom_tank
+        show_elem_time("boom_tank");
+        show_elem_time("muzzle_player")
+        change_life_score("tank_score", score_step);
+        tank_noise_boom();
+        reset_example();
+      }else {
+        show_elem_time("boom_player");
+        show_elem_time("muzzle_tank")
+        change_life_score("player_score", score_step);
+        tank_noise_boom();
+        reset_example();
+      }
+
+      end_game()
+    }
+
+    let check_answer = () =>{
+      let data = task_data ;
+        let corect_answer = data.firs_value + data.second_value;
+        let user_answer = parseInt(html_elements['answer'].value);
+        // console.log(corect_answer, user_answer)
+
+        if (corect_answer.toString().length !== user_answer.toString().length) return;
+
+        if(corect_answer === user_answer){
+          handle_answer(true);
+          // console.log('corect_answer', user_answer)
+        }else {
+          handle_answer(false)
+          // console.log('wrong_answer', user_answer)
+        }
+    }
+
+
+  let init = ()=>{
+    start_new_game();
+    html_elements["answer"].focus();
+
+    html_elements["answer"].addEventListener('input', function(event) {
+      // console.log(task_data)
+      let value = parseInt(event.data);
+      if (!Number.isInteger(value)) event.preventDefault();
+      if(Number.isInteger(value)){
+        check_answer()
+      }
+    });
+
+  }
+
+  let end_game = () =>{
+    let player_score = parseInt(html_elements["player_score"].innerHTML)
+    let tank_score = parseInt(html_elements["tank_score"].innerHTML)
+
+    if (player_score <= 0){
+      show_elem_time("lost")
+      start_new_game();
+    }
+    if (tank_score <= 0){
+      show_elem_time("win");
+      show_elem_time("rostick", 5);
+      start_new_game();
+    }
+
+  }
+
+
+  let tank_noise_boom = ()=>{
+    let noise = document.getElementById('noise_tank');
+    noise.muted = false;
+    noise.autoplay = true;
+    noise.play();
+  }
+
+
+  let start_new_game = ()=>{
+    reset_example();
+    html_elements["player_score"].innerHTML = initial_score;
+    html_elements["tank_score"].innerHTML = initial_score;
+
+    html_elements["player_score"].innerHTML = initial_score;
+    html_elements["tank_score"].innerHTML = initial_score;
+
+    show_elem_time("say_player", 10);
+    show_elem_time("say_tank", 10);
+  };
+
+  init()
+
+
+
+
+
+
+
+
+</script>
+
+<script src="game.js"></script>
+</html>
